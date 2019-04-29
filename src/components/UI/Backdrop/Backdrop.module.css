@@ -1,0 +1,17 @@
+.Backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #081B23;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity .3s ease-out;
+  pointer-events: none;
+}
+
+.Backdrop.Show {
+  opacity: 1;
+  pointer-events: auto;
+}

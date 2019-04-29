@@ -1,0 +1,58 @@
+.Back {
+  position: absolute;
+  top: 2rem;
+  left: 1.5rem;
+  z-index: 10;
+  color: #FFF;
+  font-size: 1.25rem;
+}
+.MovieDetails {
+  margin-top: 1.5rem;
+}
+
+.MovieDetails > .col:first-child {
+  padding-right: 0;
+}
+
+.Poster {
+  margin-top: -4rem;
+}
+
+.MetaData {
+  margin-top: .5rem;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5rem;
+}
+
+.MetaData .Date {
+  position: relative;
+  padding-right: .5rem;
+  margin-right: .5rem;
+}
+
+.MetaData .Date:after {
+  content: '';
+  position: absolute;
+  bottom: 40%;
+  right: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background-color: #B8D8E6;
+}
+
+.MetaData .Runtime {
+  flex-basis: 100%;
+}
+
+.Overview {
+  margin-top: 1.75rem;
+  border-top: 1px solid #0F303D;
+  padding-top: 1.5rem;
+}
+
+.Overview p {
+  line-height: 1.5rem;
+}

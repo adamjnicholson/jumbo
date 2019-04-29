@@ -1,0 +1,10 @@
+.PosterArt {
+  border-radius: 8px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.PosterArt.Single {
+ box-shadow:  0px 4px 20px rgba(0, 0, 0, 0.5), 0px 8px 16px rgba(0, 0, 0, 0.5), 0px 16px 32px rgba(0, 0, 0, 0.5);
+ border-radius: 10px;
+}

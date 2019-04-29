@@ -1,14 +1,165 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto');
+
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #081B23;
+  font-family: 'Roboto', sans-serif;
+  color: #9FBBC7;
+  font-size: 14px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.75rem;
+  color: #E3F4FC;
+  line-height: 1.875rem;
+  margin: 0;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: #E3F4FC;
+  margin-top: 0;
+  margin-bottom: .75rem;
+}
+
+h3 {
+  font-size: .9rem;
+  color: #E6F7FF;
+  font-weight: normal;
+  margin-bottom: .375rem;
+}
+
+.small {
+  font-size: .75rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+img {
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+.col {
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: 1px;
+  width: 100%;
+}
+
+.col.no-right {
+  padding-right: 0;
+}
+
+.col-m-12 {
+  width: 100%;
+}
+
+.col-m-7 {
+  width: 58.333%
+}
+
+.col-m-6 {
+  width: 50%;
+}
+
+.col-m-5 {
+  width: 41.666%;
+}
+
+.col-m-4 {
+  width: 33.333%;
+}
+
+.col-m-3 {
+  width: 25%;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .col-t-12 {
+    width: 100%;
+  }
+  
+  .col-t-7 {
+    width: 58.333%
+  }
+  
+  .col-t-6 {
+    width: 50%;
+  }
+  
+  .col-t-5 {
+    width: 41.666%;
+  }
+  
+  .col-t-4 {
+    width: 33.333%;
+  }
+  
+  .col-t-3 {
+    width: 25%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-d-12 {
+    width: 100%;
+  }
+  
+  .col-d-7 {
+    width: 58.333%
+  }
+  
+  .col-d-6 {
+    width: 50%;
+  }
+  
+  .col-d-5 {
+    width: 41.666%;
+  }
+  
+  .col-d-4 {
+    width: 33.333%;
+  }
+  
+  .col-d-3 {
+    width: 25%;
+  }
 }

@@ -1,0 +1,13 @@
+.Green { background-color: #01D277; }
+.Purple { background-color: #4902A3; }
+.Red { background-color: #D1225B }
+
+.Rating {
+  color: #FFF;
+  font-weight: bold;
+  text-align: center;
+  line-height: .9rem;
+  padding: .375rem .75rem;
+  border-radius: 8px;
+  display: inline-block;
+}

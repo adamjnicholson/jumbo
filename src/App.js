@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useRef } from 'react';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import Movies from './components/Movies/Movies'
+import Movie from './components/Movie/Movie'
+import axios from './axios'
 
-function App() {
+import classes from './App.module.css'
+const App = props => {
+
+  const [page, setPage] = useState(1)
+  const [movies, setMovies] = useState([])
+  const [scrollAmount, setScrolledAmount] = useState(0)
+  const main = useRef(null)
+
+  useEffect(() => {
+    if (props.location.pathname === '/' && main) {
+      main.current.scrollTop = scrollAmount 
+    }
+  }, [props.location.pathname, scrollAmount])
+
+  useEffect(() => {
+     axios.get('/discover/movie?sort_by=popularity.desc&page=' + page)
+      .then( res => {
+       setMovies(movies => movies.concat(res.data.results))
+      })
+  }, [page])
+
+  const scrollLoadMore = e => {
+    const main = e.target
+    const toBottom = main.scrollHeight - main.scrollTop - main.clientHeight
+    if (toBottom < main.clientHeight) {
+      setPage(page + 1)
+    }
+  }
+
+  const onShowDetails = (e, id) => {
+    e.preventDefault()
+    setScrolledAmount(main.current.scrollTop)
+    props.history.push('/movie/' + id)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <main 
+      className={classes.Main} 
+      onScroll={scrollLoadMore}
+      ref={main}>
+      <div className="container">
+        <Switch>
+          <Route path="/movie" component={Movie} />
+          <Route path="/" exact render={() => <Movies movies={movies} showDetails={onShowDetails} /> } />
+          <Redirect to="/" />
+        </Switch>
+      </div>
+    </main>
+  )
+};
 
-export default App;
+export default withRouter(App);

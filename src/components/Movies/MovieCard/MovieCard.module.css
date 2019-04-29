@@ -1,0 +1,14 @@
+.MovieCard {
+  position: relative;
+  margin-block-end: 1.5rem;
+}
+
+.MovieCard .Details {
+  margin-top: .75rem;
+}
+
+.MovieCard .Rating {
+  position: absolute;
+  top: .5rem;
+  left: 1.375rem;
+}
