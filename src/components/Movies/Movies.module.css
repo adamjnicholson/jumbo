@@ -1,0 +1,40 @@
+.SearchForm {
+  display: flex;
+  margin-bottom: 2.75rem;
+}
+
+.SearchForm input[type="text"] {
+  padding: .75rem 1rem;
+  background-color: #FFF;
+  border-radius: 100px 0 0 100px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  color: #01D277;
+  font-size: .9rem;
+  width: 100%;
+  border: none;
+}
+
+.SearchForm input[type="text"]::placeholder {
+  color: #01D277
+}
+
+.ButtonContainer {
+  position: relative;
+  background-color: #FFF;
+  border-radius: 0 100px 100px 0;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  color: #01D277;
+}
+
+.ButtonContainer input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: none;
+  background-color: transparent;
+  color: transparent;
+}

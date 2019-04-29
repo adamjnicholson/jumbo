@@ -7,8 +7,15 @@ import axios from './axios'
 import classes from './App.module.css'
 const App = props => {
 
+  const [maxPages, setMaxPages] = useState(1)
   const [page, setPage] = useState(1)
   const [movies, setMovies] = useState([])
+
+  const [maxSeachPages, setMaxSearchPages] = useState(1)
+  const [searchPage, setSearchPage] = useState(1)
+  const [searchMovies, setSearchedMovies] = useState([])
+  const [search, setSearch] = useState('')
+
   const [scrollAmount, setScrolledAmount] = useState(0)
   const main = useRef(null)
 
@@ -21,15 +28,20 @@ const App = props => {
   useEffect(() => {
      axios.get('/discover/movie?sort_by=popularity.desc&page=' + page)
       .then( res => {
-       setMovies(movies => movies.concat(res.data.results))
+        setMaxPages(res.data.total_pages)
+        setMovies(movies => movies.concat(res.data.results))
       })
   }, [page])
 
   const scrollLoadMore = e => {
     const main = e.target
     const toBottom = main.scrollHeight - main.scrollTop - main.clientHeight
-    if (toBottom < main.clientHeight) {
-      setPage(page + 1)
+    if (toBottom < main.clientHeight ) {
+      if (search && searchPage < maxSeachPages) {
+        setSearchPage(searchPage + 1)
+      } else if (page < maxPages) {
+        setPage(page + 1)
+      }
     }
   }
 
@@ -37,6 +49,20 @@ const App = props => {
     e.preventDefault()
     setScrolledAmount(main.current.scrollTop)
     props.history.push('/movie/' + id)
+  }
+
+  const onSearchChanged = e => {
+    setSearch(e.target.value)
+  }
+
+  const onSearchSubmit = e => {
+    e.preventDefault()
+    axios.get('/search/movie?query=' + search)
+      .then( res => {
+        
+        setMaxSearchPages(res.data.total_pages)
+        setSearchedMovies(res.data.results)
+      })
   }
 
   return (
@@ -47,7 +73,14 @@ const App = props => {
       <div className="container">
         <Switch>
           <Route path="/movie" component={Movie} />
-          <Route path="/" exact render={() => <Movies movies={movies} showDetails={onShowDetails} /> } />
+          <Route path="/" render={() => (
+            <Movies 
+              movies={search ? searchMovies : movies} 
+              showDetails={onShowDetails}
+              searchVal={search}
+              changed={onSearchChanged}
+              submit={onSearchSubmit} />
+          )} />
           <Redirect to="/" />
         </Switch>
       </div>
