@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and created in response to Jumbo Interactive's coding challenge.
+
+To install, use npm i in the root folder
 
 ## Available Scripts
 
