@@ -17,6 +17,7 @@ import classes from './Movie.module.css'
 const Movie = props => {
   const [movie, setMovie] = useState(null)
   const [error, setError] = useState(null)
+  const [bannerSize, setBannerSize] = useState('/w780')
   const [imagesLoaded, setImagesLoaded] = useState(false)
 
   useEffect(() => {
@@ -31,8 +32,25 @@ const Movie = props => {
         console.log(err.response)
       })
   }, [props.location.pathname])
+
+  useEffect(() => {
+    const getBannerSize = () => {
+      console.log('get size')
+      const windowW = document.documentElement.clientWidth
+      if (windowW > 1280) {
+       setBannerSize('/original')
+      } else if (windowW > 780) (
+        setBannerSize('/w1280')
+      )
+    }
+    getBannerSize()
+    window.addEventListener('resize', getBannerSize)
+      
+    return () => {
+      window.removeEventListener("resize", getBannerSize);
+    }
+  }, [])
   
-  const movieDetails = ['row', classes.MovieDetails].join(' ')
   const metaData = [classes.MetaData, 'small'].join(' ')
 
   const checkImagesLoaded = () => {
@@ -40,26 +58,27 @@ const Movie = props => {
     const imgsLoaded = [...imgs].map(img => img.complete).every(img => img)
     setImagesLoaded(imgsLoaded)
   }
-
+  
   let content = null
   if (movie) {
     content = (
       <Fragment>
         <header className="row">
-          <Image id={movie.backdrop_path} alt={movie.title} loaded={checkImagesLoaded} />
+          <Image id={movie.backdrop_path} alt={movie.title} loaded={checkImagesLoaded} size={bannerSize} />
           <Link to="/" className={classes.Back}>
             <FaArrowLeft />
           </Link>
         </header>
-        <main className={movieDetails}>
-          <div className="col col-m-5 no-right">
+        <main className={classes.MovieDetails}>
+          <div className={classes.PosterCol}>
             <PosterArt 
               className={classes.Poster} 
               imageId={movie.poster_path} 
-              title={movie.title} single 
+              title={movie.title} 
+              single 
               loaded={checkImagesLoaded}/>
           </div>
-          <div className="col col-m-7">
+          <div className={classes.DetailsCol}>
             <h1>{movie.title}</h1>
             <div className={metaData}>
               <div className={classes.Date}>{formatDate(movie.release_date, 'y')}</div>
@@ -67,7 +86,7 @@ const Movie = props => {
               <div className={classes.Runtime}>{hourMins(movie.runtime)}</div>
             </div>
           </div>
-          <div className="col">
+          <div className={classes.OverviewCol}>
             <div className={classes.Overview}>
               <h2>Overview</h2>
               <p>{movie.overview}</p>
@@ -91,7 +110,7 @@ const Movie = props => {
     <Fragment>
     { content }
      <Backdrop show={!imagesLoaded && !error}>
-       <Spinner />
+       <Spinner center show />
      </Backdrop>
     </Fragment>
   

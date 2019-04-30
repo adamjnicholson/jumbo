@@ -138,7 +138,7 @@ img {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .col-d-12 {
     width: 100%;
   }

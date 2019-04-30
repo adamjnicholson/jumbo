@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import Movies from './components/Movies/Movies'
 import Movie from './components/Movie/Movie'
@@ -23,42 +23,37 @@ const App = props => {
   const main = useRef(null)
 
   //SEARCH
-  const getSearchQuery = useCallback( () => {
+    useEffect(() => {
     let searchQuery = new URLSearchParams(props.location.search).get('s')
     if (!searchQuery) {
       searchQuery = ''
-      props.history.replace('/')
     }
 
-    setShowingSearch(!!searchQuery)
     setSearchPage( searchQuery ? 1 : 0)
     setSearchQuery(searchQuery)
     setSearchInput(searchQuery)
+    setShowingSearch(!!searchQuery)
   }, [props.location.search])
 
   useEffect(() => {
-    getSearchQuery()
-  }, [getSearchQuery])
-
-  // useEffect(() => {
-  //   if (searchPage && searchQuery && !loading) {
-  //     setLoading(true)
-  //     axios.get('/search/movie?include_adult=false&query=' + searchQuery + '&page=' + searchPage)
-  //       .then( res => {
-  //         setLoading(false)
-  //         setMaxSearchPages(res.data.total_pages)
-  //         if (searchPage === 1) {
-  //           setSearchedMovies(res.data.results)
-  //         } else {
-  //           setSearchedMovies(searchMovies => searchMovies.concat(res.data.results))
-  //         }
-  //       })
-  //       .catch (err => {
-  //         setLoading(false)
-  //         console.log(err.response)
-  //       })
-  //   }
-  // }, [searchPage, searchQuery])
+    if (searchPage && searchQuery && !loading) {
+      setLoading(true)
+      axios.get('/search/movie?include_adult=false&query=' + searchQuery + '&page=' + searchPage)
+        .then( res => {
+          setLoading(false)
+          setMaxSearchPages(res.data.total_pages)
+          if (searchPage === 1) {
+            setSearchedMovies(res.data.results)
+          } else {
+            setSearchedMovies(searchMovies => searchMovies.concat(res.data.results))
+          }
+        })
+        .catch (err => {
+          setLoading(false)
+          console.log(err.response)
+        })
+    }
+  }, [searchPage, searchQuery])
   
   const onSearchChanged = e => {
     setSearchInput(e.target.value)
@@ -94,7 +89,6 @@ const App = props => {
 
   const onShowDetails = (e, id) => {
     e.preventDefault()
-    console.log(id)
     setScrolledAmount(main.current.scrollTop)
     props.history.push('/movie/' + id)
   }
@@ -112,9 +106,11 @@ const App = props => {
   }, [page])
 
   const moviesToShow = showingSearch ? searchMovies : movies
+  const currentPage = showingSearch ? searchPage : page
   const heading = showingSearch ? 'Search: ' + searchQuery : 'Popular Movies'
-  console.log(props)
-  return (
+  const showSpinner = showingSearch ? searchPage < maxSeachPages : page < maxPages
+
+return (
     <main 
       className={classes.Main} 
       onScroll={scrollLoadMore}
@@ -129,8 +125,10 @@ const App = props => {
               showingSearch={showingSearch}
               showDetails={onShowDetails}
               searchVal={searchInput}
+              page={currentPage}
               changed={onSearchChanged}
-              submit={onSearchSubmit} />
+              submit={onSearchSubmit}
+              showSpinner={showSpinner} />
           )} />
           <Redirect to="/" />
         </Switch>

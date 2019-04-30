@@ -6,16 +6,27 @@
   color: #FFF;
   font-size: 1.25rem;
 }
+
 .MovieDetails {
   margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  grid-template-rows: auto 1fr;
 }
 
-.MovieDetails > .col:first-child {
-  padding-right: 0;
+.PosterCol {
+  margin-top: -20%;
+  position: relative;
+  z-index: 5;
 }
 
-.Poster {
-  margin-top: -4rem;
+.DetailsCol {
+  padding-left: 1rem;
+}
+
+.OverviewCol {
+  padding: 0 1rem;
+  grid-column: 1 / -1;
 }
 
 .MetaData {
@@ -55,4 +66,27 @@
 
 .Overview p {
   line-height: 1.5rem;
+}
+
+@media (min-width: 700px) {
+  .MovieDetails {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .PosterCol {
+    grid-row: 1 / -1;
+    padding-right: 1rem;
+  }
+
+  .OverviewCol {
+    grid-column: 2 / -1
+
+  }
+  
+}
+
+@media (min-width: 1024px) {
+  .MovieDetails {
+    grid-template-columns: 1fr 3fr;
+  }
 }

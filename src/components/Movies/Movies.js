@@ -1,11 +1,16 @@
 import React, { Fragment, useState } from 'react'
-import {FaSearch} from 'react-icons/fa'
+import { FaSearch } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 import MovieCard from './MovieCard/MovieCard'
 import Backdrop from '../UI/Backdrop/Backdrop'
 import Spinner from '../UI/Spinner/Spinner'
 import Form from '../Form/Form'
+
+import Logo from '../UI/Logo/Logo'
+import appHeader from '../../assets/app-header.svg'
 import classes from './Movies.module.css'
+
 const Movies = props => {
 
   const [imagesLoaded, setImagesLoaded] = useState(false)
@@ -51,7 +56,11 @@ const Movies = props => {
 
   return (
     <Fragment>
-      
+      <div className={classes.AppHeader}>
+        <img src={appHeader} alt="background" />
+        <Link to="/"><Logo /></Link>
+      </div>
+
       <Form 
         className={classes.SearchForm}
         submit={onSubmit} 
@@ -62,13 +71,17 @@ const Movies = props => {
           <input type="submit" />
         </div>
       </Form>
+
       {heading}
       <div className="row">
         {content}
       </div>
-      <Backdrop show={!imagesLoaded}>
-        <Spinner />
+
+      <Backdrop show={!imagesLoaded && props.page === 1}>
+        <Spinner center show />
       </Backdrop>
+
+      <Spinner show={props.showSpinner} />
     </Fragment>
   )
 }

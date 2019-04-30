@@ -1,3 +1,18 @@
+.AppHeader {
+  position: relative;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.AppHeader a:last-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100px;
+  width: 100%;
+}
+
 .SearchForm {
   display: flex;
   margin:0 -1rem 2.75rem -1rem;
