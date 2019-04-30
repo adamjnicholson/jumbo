@@ -1,6 +1,11 @@
 .SearchForm {
   display: flex;
-  margin-bottom: 2.75rem;
+  margin:0 -1rem 2.75rem -1rem;
+  padding: .5rem 1rem;
+  position: sticky;
+  top: 0;
+  background-color: #081B23;
+  z-index: 5;
 }
 
 .SearchForm input[type="text"] {

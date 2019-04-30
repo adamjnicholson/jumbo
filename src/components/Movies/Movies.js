@@ -9,13 +9,13 @@ import classes from './Movies.module.css'
 const Movies = props => {
 
   const [imagesLoaded, setImagesLoaded] = useState(false)
-  const [inputs, setInputs] = useState({
+  const inputs = {
     search: {
       type: 'text',
       placeholder: 'Search',
-      value: props.search
+      value: props.searchVal
     }
-  })
+  }
 
   const checkImagesLoaded = () => {
     const imgs = document.querySelectorAll('img')
@@ -23,22 +23,38 @@ const Movies = props => {
     setImagesLoaded(imgsLoaded)
   }
 
-  const content = (
-    props.movies.map( movie => (
-      <MovieCard 
-        key={movie.id} 
-        movie={movie}
-        showDetails={props.showDetails}
-        imageLoaded={checkImagesLoaded} 
-      />
-    ))
-  )
+  let content = ''
+  let heading = ''
+
+  if (props.movies.length === 0 && props.showingSearch) {
+    content = <h3 className="col">Sorry, no movies can be found. Please try to search for something else.</h3>
+  }
+
+  if (props.movies.length) {
+    content = (
+      props.movies.map( movie => (
+        <MovieCard 
+          key={movie.id} 
+          movie={movie}
+          showDetails={props.showDetails}
+          imageLoaded={checkImagesLoaded} 
+        />
+      ))
+    )
+    heading =  <h2>{props.heading}</h2>
+  }
+
+  const onSubmit = e => {
+    setImagesLoaded(false)
+    props.submit(e)
+  }
 
   return (
     <Fragment>
+      
       <Form 
         className={classes.SearchForm}
-        submit={props.submit} 
+        submit={onSubmit} 
         inputs={inputs}
         changed={props.changed}>
         <div className={classes.ButtonContainer}>
@@ -46,8 +62,7 @@ const Movies = props => {
           <input type="submit" />
         </div>
       </Form>
-      
-      <h2>Popular Movies</h2>
+      {heading}
       <div className="row">
         {content}
       </div>
